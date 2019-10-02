@@ -233,43 +233,59 @@
 	}
 
 	$( document ).ready( function() {
-		if (window.GeoJson !== null) {
-			initializeEditor();
-		}
+		// let map = L.map(
+		// 	'GeoJsonMap',
+		// 	{
+		// 	}
+		// );
+		//
+		// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		// 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		// }).addTo(map);
+		//
+		// map.fitWorld();
+		//
+		// L.marker([1,1], {title: 'whatever'}).addTo(map);
 
-		$('#maps-geojson-new').click(
-			function() {
-				$(this).prop('disabled', true);
-				$(this).text(mw.msg('maps-geo-json-create-page-creating'));
 
-				new mw.Api().create(
-					mw.config.get('wgPageName'),
-					{
-						summary: mw.msg('maps-geo-json-create-page-summary')
-					},
-					'{"type": "FeatureCollection", "features": []}'
-				).then(
-					function(editData) {
-						if (editData.result === 'Success') {
-							// $(this).hide();
-							// $('#maps-geojson-map-wrapper').show();
-							// initializeEditor();
-						}
-						else {
-							console.log(editData);
-							alert('Failed to create the page');
-						}
 
-						location.reload();
-					}
-				).fail(
-					function(reason) {
-						alert('Failed to create the page: ' + reason);
-						location.reload();
-					}
-				);
-			}
-		);
+		// if (window.GeoJson !== null) {
+		// 	initializeEditor();
+		// }
+		//
+		// $('#maps-geojson-new').click(
+		// 	function() {
+		// 		$(this).prop('disabled', true);
+		// 		$(this).text(mw.msg('maps-geo-json-create-page-creating'));
+		//
+		// 		new mw.Api().create(
+		// 			mw.config.get('wgPageName'),
+		// 			{
+		// 				summary: mw.msg('maps-geo-json-create-page-summary')
+		// 			},
+		// 			'{"type": "FeatureCollection", "features": []}'
+		// 		).then(
+		// 			function(editData) {
+		// 				if (editData.result === 'Success') {
+		// 					// $(this).hide();
+		// 					// $('#maps-geojson-map-wrapper').show();
+		// 					// initializeEditor();
+		// 				}
+		// 				else {
+		// 					console.log(editData);
+		// 					alert('Failed to create the page');
+		// 				}
+		//
+		// 				location.reload();
+		// 			}
+		// 		).fail(
+		// 			function(reason) {
+		// 				alert('Failed to create the page: ' + reason);
+		// 				location.reload();
+		// 			}
+		// 		);
+		// 	}
+		// );
 	} );
 
 })( window.jQuery, mediaWiki );

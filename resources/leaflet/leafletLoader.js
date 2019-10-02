@@ -1,15 +1,18 @@
 window.mapsLeafletList = [];
 
-(function( $ ) {
+(function( $, mv, L ) {
 	$( document ).ready( function() {
 		$( '.maps-leaflet' ).each( function() {
-			let $this = $( this );
-
-			let jqueryMap = $this.leafletmaps(
-				$.parseJSON( $this.find( 'div.mapdata' ).text() )
+			let map = L.map(
+				$(this).attr('id'),
+				{}
 			);
 
-			window.mapsLeafletList.push(jqueryMap);
+			new L.tileLayer.provider('OpenStreetMap',{}).addTo(map);
+
+			map.fitWorld();
+
+			L.marker([1,1]).addTo(map);
 		} );
 	} );
-})( window.jQuery );
+})(jQuery, window.mediaWiki, L);

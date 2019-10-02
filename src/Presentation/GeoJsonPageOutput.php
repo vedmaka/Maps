@@ -23,100 +23,23 @@ class GeoJsonPageOutput {
 	}
 
 	public function addToParserOutput( \ParserOutput $parserOutput ) {
-		$parserOutput->setText( $this->getJavascript() . $this->getHtml() );
+		$parserOutput->setText(  $this->getHtml() );
 		$parserOutput->addModules( $this->getResourceModules() );
 	}
 
 	public function addToOutputPage( \OutputPage $output ) {
-		$output->addHTML( $this->getJavascript() . $this->getHtml() );
+		$output->addHTML(  $this->getHtml() );
 		$output->addModules( $this->getResourceModules() );
 	}
 
 	private function getResourceModules(): array {
 		return [
-			'ext.maps.leaflet.editor'
+			'ext.maps.leaflet.loader'
 		];
 	}
 
-	private function getJavascript(): string {
-		return Html::element(
-			'script',
-			[],
-			$this->getJsonJs()
-		);
-	}
-
-	private function getJsonJs(): string {
-		return 'var GeoJson ='
-			. ( $this->json ?? 'null' )
-			. ';';
-	}
-
 	private function getHtml(): string {
-		if ( $this->isExistingPage() ) {
-			return $this->getMapHtml();
-		}
-
-		return $this->getNewPageHtml();
-	}
-
-	private function isExistingPage(): bool {
-		return $this->json !== null;
-	}
-
-	private function getMapHtml(): string {
-		return $this->wrapHtmlInThumbDivs(
-			Html::rawElement(
-				'div',
-				[
-					'id' => 'GeoJsonMap',
-					'style' => 'width: 100%; height: 600px; background-color: #eeeeee; overflow: hidden;',
-					'class' => 'maps-map maps-leaflet maps-geojson-editor'
-				],
-				Html::element(
-					'div',
-					[
-						'class' => 'maps-loading-message'
-					],
-					wfMessage( 'maps-loading-map' )->inContentLanguage()->text()
-				)
-			)
-		);
-	}
-
-	private function wrapHtmlInThumbDivs( string $html ): string {
-		return Html::rawElement(
-			'div',
-			[
-				'class' => 'thumb'
-			],
-			Html::rawElement(
-				'div',
-				[
-					'class' => 'thumbinner'
-				],
-				$html
-			)
-		);
-	}
-
-	private function getNewPageHtml(): string {
-		return
-			Html::element(
-				'button',
-				[
-					'id' => 'maps-geojson-new'
-				],
-				wfMessage( 'maps-geo-json-create-page-button' )->inContentLanguage()->text()
-			)
-			. Html::rawElement(
-				'div',
-				[
-					'style' => 'display: none;',
-					'id' => 'maps-geojson-map-wrapper'
-				],
-				$this->getMapHtml()
-			);
+		return '<div id="GeoJsonMap" class="maps-leaflet" style="height: 400px; width: 800px"></div>';
 	}
 
 }

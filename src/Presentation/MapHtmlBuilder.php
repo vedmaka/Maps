@@ -10,34 +10,8 @@ use Html;
 class MapHtmlBuilder {
 
 	public function getMapHTML( array $params, string $mapName, string $serviceName ): string {
-		if ( is_int( $params['height'] ) ) {
-			$params['height'] = (string)$params['height'] . 'px';
-		}
+		return '<div id="' . $mapName . '" class="maps-leaflet" style="height: 400px; width: 800px"></div>';
 
-		if ( is_int( $params['width'] ) ) {
-			$params['width'] = (string)$params['width'] . 'px';
-		}
-
-		return Html::rawElement(
-			'div',
-			[
-				'id' => $mapName,
-				'style' => "width: {$params['width']}; height: {$params['height']}; background-color: #eeeeee; overflow: hidden;",
-				'class' => 'maps-map maps-' . $serviceName
-			],
-			Html::element(
-				'div',
-				[
-					'class' => 'maps-loading-message'
-				],
-				wfMessage( 'maps-loading-map' )->inContentLanguage()->text()
-			)
-			. Html::element(
-				'div',
-				[ 'style' => 'display:none', 'class' => 'mapdata' ],
-				FormatJson::encode( $params )
-			)
-		);
 	}
 
 }
